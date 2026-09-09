@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #3b82f6;
+  --color-primary: #4f46e5;
   --color-secondary: #8b5cf6;
   --color-background-light: #f8fafc;
   --color-surface-light: #ffffff;
@@ -16,21 +16,20 @@
 
 @layer base {
   body {
-    @apply bg-white text-slate-900 antialiased transition-colors duration-300;
+    @apply bg-slate-50 text-slate-900 antialiased transition-colors duration-300;
   }
   
   .dark body {
-    @apply bg-slate-900 text-slate-50;
+    @apply bg-slate-950 text-slate-50;
   }
 }
 
-/* Custom utility classes for premium glassmorphism feel */
 @layer utilities {
-  .glass-panel {
-    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg;
+  .subtle-shadow {
+    @apply shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)];
   }
   
-  .dark .glass-panel {
-    @apply bg-slate-800/80 backdrop-blur-md border border-slate-700/50 shadow-lg shadow-black/20;
+  .dark .subtle-shadow {
+    @apply shadow-[0_4px_20px_-4px_rgba(0,0,0,0.2)];
   }
 }

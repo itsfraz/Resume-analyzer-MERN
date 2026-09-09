@@ -36,12 +36,12 @@ const UploadResume = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto py-8">
       <div className="text-center mb-10">
-        <h1 className="text-3xl sm:text-4xl font-bold dark:text-white mb-4">
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">
           Upload Your Resume
         </h1>
-        <p className="text-slate-600 dark:text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-400 text-base">
           Let our AI analyze your resume and give you an instant ATS score.
         </p>
       </div>
@@ -57,15 +57,15 @@ const UploadResume = () => {
         ].map((item, idx) => (
           <motion.div 
             key={idx}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
-            className="text-center"
+            className="text-center p-6 bg-white dark:bg-slate-900 rounded-2xl subtle-shadow border border-slate-200 dark:border-slate-800"
           >
-            <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
-              <item.icon className="w-6 h-6 text-blue-500" />
+            <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <item.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             </div>
-            <h4 className="font-bold dark:text-white mb-2">{item.title}</h4>
+            <h4 className="font-semibold text-slate-900 dark:text-white mb-2">{item.title}</h4>
             <p className="text-sm text-slate-500 dark:text-slate-400">{item.desc}</p>
           </motion.div>
         ))}
