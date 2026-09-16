@@ -1,5 +1,5 @@
 const fs = require('fs');
-const pdfParse = require('pdf-parse');
+const { PDFParse } = require('pdf-parse');
 const Resume = require('../models/Resume');
 const { analyzeResumeText } = require('../services/aiService');
 
@@ -19,8 +19,13 @@ const uploadResume = async (req, res, next) => {
     // Extract text from PDF
     if (req.file.mimetype === 'application/pdf') {
       const dataBuffer = fs.readFileSync(filePath);
-      const data = await pdfParse(dataBuffer);
-      rawText = data.text;
+      const parser = new PDFParse({ data: dataBuffer });
+      try {
+        const data = await parser.getText();
+        rawText = data.text;
+      } finally {
+        await parser.destroy();
+      }
     } else {
       // Basic placeholder for word doc - in real app use mammoth
       rawText = "Word document parsing not fully implemented in demo.";
@@ -65,7 +70,26 @@ const getResumes = async (req, res, next) => {
   }
 };
 
+// @desc    Get resume by ID
+// @route   GET /api/resumes/:id
+// @access  Private
+const getResumeById = async (req, res, next) => {
+  try {
+    const resume = await Resume.findOne({ _id: req.params.id, userId: req.user.id });
+    if (!resume) {
+      return res.status(404).json({ message: 'Resume not found' });
+    }
+    res.status(200).json({ resume });
+  } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(404).json({ message: 'Resume not found' });
+    }
+    next(error);
+  }
+};
+
 module.exports = {
   uploadResume,
-  getResumes
+  getResumes,
+  getResumeById
 };

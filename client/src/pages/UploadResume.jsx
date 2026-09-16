@@ -16,21 +16,18 @@ const UploadResume = () => {
     formData.append('title', file.name);
 
     try {
-      const response = await api.post('/resumes/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const response = await api.post('/resumes/upload', formData);
       
       if (response.data && response.data.resume) {
         setTimeout(() => {
           navigate(`/dashboard/resumes/${response.data.resume._id}`);
         }, 1500);
+      } else {
+        setIsUploading(false);
       }
     } catch (error) {
       console.error('Error uploading file:', error);
-      alert('Failed to upload resume. Please try again.');
-    } finally {
+      alert(error.response?.data?.message || 'Failed to upload resume. Please try again.');
       setIsUploading(false);
     }
   };

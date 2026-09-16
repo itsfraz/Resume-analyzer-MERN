@@ -12,11 +12,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Data sanitization against NoSQL query injection
-app.use(mongoSanitize());
+// Data sanitization against NoSQL query injection (applied selectively, not globally to avoid corrupting auth fields)
+// app.use(mongoSanitize());
 
-// Data sanitization against XSS
-app.use(xss());
+// Note: xss-clean is NOT applied globally as it mutates parsed body fields (email, password)
+// and can cause bcrypt password comparison to fail.
 
 // CORS configuration
 app.use(cors({

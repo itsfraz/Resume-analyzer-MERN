@@ -22,7 +22,7 @@ const DashboardLayout = () => {
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
     { icon: Upload, label: 'Analyze Resume', path: '/dashboard/upload' },
-    { icon: FileText, label: 'My Resumes', path: '/dashboard/history' },
+    { icon: FileText, label: 'My Resumes', path: '/dashboard/resumes' },
   ];
 
   const bottomMenuItems = [

@@ -61,7 +61,14 @@ const ResumeDetails = () => {
     return 'text-red-500';
   };
 
-  const score = resume.analysis?.score || 0;
+  const score = resume.atsScore || 0;
+  
+  const issues = [
+    ...(resume.analysisData?.formattingIssues || []),
+    ...(resume.analysisData?.readabilityIssues || []),
+    ...(resume.analysisData?.grammarIssues || [])
+  ];
+  const suggestions = resume.analysisData?.suggestions || [];
   
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -122,9 +129,9 @@ const ResumeDetails = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {resume.analysis?.issues?.length > 0 ? (
+            {issues.length > 0 ? (
               <ul className="space-y-4">
-                {resume.analysis.issues.map((issue, index) => (
+                {issues.map((issue, index) => (
                   <li key={index} className="flex gap-3 items-start">
                     <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                     <span className="text-slate-700 dark:text-slate-300 leading-relaxed text-sm">{issue}</span>
@@ -149,9 +156,9 @@ const ResumeDetails = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {resume.analysis?.suggestions?.length > 0 ? (
+            {suggestions.length > 0 ? (
               <ul className="space-y-4">
-                {resume.analysis.suggestions.map((suggestion, index) => (
+                {suggestions.map((suggestion, index) => (
                   <li key={index} className="flex gap-3 items-start bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
                     <div className="bg-primary/10 dark:bg-primary/20 text-primary w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">
                       {index + 1}
